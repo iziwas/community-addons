@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo.tests import Form, tagged
 from odoo.addons.sale.tests.test_sale_refund import TestSaleToInvoice
+from odoo.tests import Form, tagged
 
 
-@tagged('post_install', '-at_install', 'sale_order_tags')
+@tagged("post_install", "-at_install", "sale_order_tags")
 class TestSaleOrderTags(TestSaleToInvoice):
-
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass(chart_template_ref=chart_template_ref)
-        cls.facture_tag = cls.env.ref('sale_order_tags.crm_tag_facture')
-        cls.avoir_partiel_tag = cls.env.ref('sale_order_tags.crm_tag_avoir_partiel')
-        cls.avoir_integral_tag = cls.env.ref('sale_order_tags.crm_tag_avoir_integral')
+        cls.facture_tag = cls.env.ref("sale_order_tags.crm_tag_facture")
+        cls.avoir_partiel_tag = cls.env.ref("sale_order_tags.crm_tag_avoir_partiel")
+        cls.avoir_integral_tag = cls.env.ref("sale_order_tags.crm_tag_avoir_integral")
 
     def test_sale_order_invoice_tag(self):
         """
@@ -22,14 +21,17 @@ class TestSaleOrderTags(TestSaleToInvoice):
         """
         # Validate invoice
         self.invoice.action_post()
-        self.assertTrue(self.facture_tag in self.sale_order.invoice_tag_ids, "Le tag `facture` devrait être présent.")
+        self.assertTrue(
+            self.facture_tag in self.sale_order.invoice_tag_ids,
+            "Le tag `facture` devrait être présent.",
+        )
         self.assertTrue(
             self.avoir_partiel_tag not in self.sale_order.invoice_tag_ids,
-            "Le tag `avoir partiel` doit être absent."
+            "Le tag `avoir partiel` doit être absent.",
         )
         self.assertTrue(
             self.avoir_integral_tag not in self.sale_order.invoice_tag_ids,
-            "Le tag `avoir intégral` doit être absent."
+            "Le tag `avoir intégral` doit être absent.",
         )
 
     def test_sale_order_refund_tag(self):
@@ -43,4 +45,3 @@ class TestSaleOrderTags(TestSaleToInvoice):
         self.assertTrue(self.facture_tag in self.sale_order.invoice_tag_ids)
         self.assertTrue(self.avoir_partiel_tag not in self.sale_order.invoice_tag_ids)
         self.assertTrue(self.avoir_integral_tag in self.sale_order.invoice_tag_ids)
-

@@ -14,10 +14,10 @@ class SaleOrder(models.Model):
         "sale_order_invoice_crm_tag_rel",
         string="Invoice tags",
         compute="_compute_sale_order_tags",
-        store=True
+        store=True,
     )
 
-    @api.depends('order_line.invoice_lines', 'order_line.invoice_lines.move_id.state')
+    @api.depends("order_line.invoice_lines", "order_line.invoice_lines.move_id.state")
     def _compute_sale_order_tags(self):
         facture_tag = self.env.ref("sale_order_tags.crm_tag_facture")
         avoir_partiel_tag = self.env.ref("sale_order_tags.crm_tag_avoir_partiel")
@@ -29,7 +29,7 @@ class SaleOrder(models.Model):
                 [
                     invoice.amount_total
                     for invoice in rec.order_line.invoice_lines.move_id.filtered(
-                        lambda r: r.move_type == "out_invoice" and r.state == 'posted'
+                        lambda r: r.move_type == "out_invoice" and r.state == "posted"
                     )
                 ]
             )
@@ -38,7 +38,7 @@ class SaleOrder(models.Model):
                 [
                     invoice.amount_total
                     for invoice in rec.order_line.invoice_lines.move_id.filtered(
-                        lambda r: r.move_type == "out_refund" and r.state == 'posted'
+                        lambda r: r.move_type == "out_refund" and r.state == "posted"
                     )
                 ]
             )
