@@ -2,15 +2,18 @@
 {
     "name": "Sale Order Tags",
     "category": "Sales/Sales",
+    "version": "14.0.1.0.0",
     "description": """
 Sale Order Tags
 ===============
-Tools to add automatic tags if account.invoice is paid or not
+Tools to add automatically tags if account.invoice is paid or not
     """,
-    "depends": ["sale"],
+    "depends": ["sale", "sale_order_tags_data"],
     "data": [
-        "data/crm_tag.xml",
-        "views/sale_order.xml",
+        "views/sale_order_tags.xml",
     ],
-    "license": "OEEL-1",
+    "installable": True,
+    "auto_install": False,
+    "application": True,
+    "license": "LGPL-3",
 }

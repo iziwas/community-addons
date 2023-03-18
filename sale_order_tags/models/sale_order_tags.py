@@ -1,12 +1,7 @@
-""" Héritage de sale.order pour ajouter le calcul des tags """
-import logging
-
 from odoo import api, fields, models
 
-_logger = logging.getLogger(__name__)
 
-
-class SaleOrder(models.Model):
+class SaleOrderTags(models.Model):
     _inherit = "sale.order"
 
     invoice_tag_ids = fields.Many2many(
@@ -19,9 +14,9 @@ class SaleOrder(models.Model):
 
     @api.depends("order_line.invoice_lines", "order_line.invoice_lines.move_id.state")
     def _compute_sale_order_tags(self):
-        facture_tag = self.env.ref("sale_order_tags.crm_tag_facture")
-        avoir_partiel_tag = self.env.ref("sale_order_tags.crm_tag_avoir_partiel")
-        avoir_integral_tag = self.env.ref("sale_order_tags.crm_tag_avoir_integral")
+        invoice_tag = self.env.ref("sale_order_tags_data.crm_invoice_tag")
+        partial_refund_tag = self.env.ref("sale_order_tags_data.crm_partial_refund_tag")
+        full_refund_tag = self.env.ref("sale_order_tags_data.crm_full_refund_tag")
 
         for rec in self:
             res_tags = []
@@ -43,17 +38,17 @@ class SaleOrder(models.Model):
                 ]
             )
 
-            # Ajout du tag `facture
+            # Add invoice tag
             if amount_total_invoiced:
-                res_tags.append(facture_tag.id)
+                res_tags.append(invoice_tag.id)
 
-            # Gestion des tags `avoir
+            # Refund tags
             if amount_total_invoiced and amount_total_refunded:
-                # Ajout du tag `avoir integral`
+                # Add full refund tag if amount_total_invoice and amount_total_refunded have the same value.
                 if amount_total_refunded == amount_total_invoiced:
-                    res_tags.append(avoir_integral_tag.id)
+                    res_tags.append(full_refund_tag.id)
                 else:
-                    # Ajout du tag `avoir partiel`
+                    # Partial refund tag
                     if amount_total_refunded:
-                        res_tags.append(avoir_partiel_tag.id)
+                        res_tags.append(partial_refund_tag.id)
             rec.invoice_tag_ids = [(6, 0, res_tags)]

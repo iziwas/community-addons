@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="crm_invoice_tag" model="crm.tag">
+            <field name="name">Invoice</field>
+            <field name="color">3</field>
+            <field name="can_be_deleted">False</field>
+        </record>
+
+        <record id="crm_full_refund_tag" model="crm.tag">
+            <field name="name">Full refund</field>
+            <field name="color">7</field>
+            <field name="can_be_deleted">False</field>
+        </record>
+
+        <record id="crm_partial_refund_tag" model="crm.tag">
+            <field name="name">Partial refund</field>
+            <field name="color">7</field>
+            <field name="can_be_deleted">False</field>
+        </record>
+    </data>
+</odoo>

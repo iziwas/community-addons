@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo.addons.sale.tests.test_sale_refund import TestSaleToInvoice
 from odoo.tests import Form, tagged
 
@@ -9,39 +8,51 @@ class TestSaleOrderTags(TestSaleToInvoice):
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass(chart_template_ref=chart_template_ref)
-        cls.facture_tag = cls.env.ref("sale_order_tags.crm_tag_facture")
-        cls.avoir_partiel_tag = cls.env.ref("sale_order_tags.crm_tag_avoir_partiel")
-        cls.avoir_integral_tag = cls.env.ref("sale_order_tags.crm_tag_avoir_integral")
+        cls.invoice_tag = cls.env.ref("sale_order_tags_data.crm_invoice_tag")
+        cls.partial_refund_tag = cls.env.ref("sale_order_tags_data.crm_partial_refund_tag")
+        cls.full_refund_tag = cls.env.ref("sale_order_tags_data.crm_full_refund_tag")
 
     def test_sale_order_invoice_tag(self):
         """
-        Création d'une facture
-            - Vérification que la facture ait bien le tag 'Facture'
-            - Vérification sur le fait que les tags `avoir partiel` et `avoir total` soient absents
+        Invoice posted
+            - Check if the SO have `invoice tag`
+            - Check if SO doesn't have `full refund` and `partial refund` tags
         """
         # Validate invoice
         self.invoice.action_post()
         self.assertTrue(
-            self.facture_tag in self.sale_order.invoice_tag_ids,
-            "Le tag `facture` devrait être présent.",
+            self.invoice_tag in self.sale_order.invoice_tag_ids,
+            "Invoice tag should be present in this SO.",
         )
         self.assertTrue(
-            self.avoir_partiel_tag not in self.sale_order.invoice_tag_ids,
-            "Le tag `avoir partiel` doit être absent.",
+            self.partial_refund_tag not in self.sale_order.invoice_tag_ids,
+            "Partial refund tag shouldn't be present in this SO.",
         )
         self.assertTrue(
-            self.avoir_integral_tag not in self.sale_order.invoice_tag_ids,
-            "Le tag `avoir intégral` doit être absent.",
+            self.full_refund_tag not in self.sale_order.invoice_tag_ids,
+            "Full refund tag shouldn't be present in this SO.",
         )
 
-    def test_sale_order_refund_tag(self):
+    def test_sale_order_full_refund_tag(self):
         """
-        Création d'une facture
-            - Vérification que la facture possède le tag 'Facture'
-            - Vérification que la facture n'ait pas le tag `avoir partiel`
-            - Vérification que la facture possède le tag `avoir total`
+        Invoice posted
+            - Check if the SO have `invoice tag`
+            - Check if SO doesn't have `partial refund` tag
+            - Check if SO have `full refund tag`
         """
         self.test_refund_create()
-        self.assertTrue(self.facture_tag in self.sale_order.invoice_tag_ids)
-        self.assertTrue(self.avoir_partiel_tag not in self.sale_order.invoice_tag_ids)
-        self.assertTrue(self.avoir_integral_tag in self.sale_order.invoice_tag_ids)
+        self.assertTrue(self.invoice_tag in self.sale_order.invoice_tag_ids)
+        self.assertTrue(self.partial_refund_tag not in self.sale_order.invoice_tag_ids)
+        self.assertTrue(self.full_refund_tag in self.sale_order.invoice_tag_ids)
+
+    def test_sale_order_partial_refund_tag(self):
+        """
+        Invoice posted
+            - Check if the SO have `invoice tag`
+            - Check if SO have `partial refund` tag
+            - Check if SO doesn't have `full refund tag`
+        """
+        self.test_refund_modify()
+        self.assertTrue(self.invoice_tag in self.sale_order.invoice_tag_ids)
+        self.assertTrue(self.partial_refund_tag in self.sale_order.invoice_tag_ids)
+        self.assertTrue(self.full_refund_tag not in self.sale_order.invoice_tag_ids)

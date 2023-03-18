@@ -7,7 +7,7 @@
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <field name="amount_untaxed" position="before">
-                <field name="invoice_tag_ids" widget="many2many_tags" />
+                <field name="invoice_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
             </field>
         </field>
     </record>
