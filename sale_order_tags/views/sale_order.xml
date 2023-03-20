@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
     <record id="sale_order_tags_view_tree" model="ir.ui.view">
         <field name="name">sale_order_tags_view_tree</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_quotation_tree" />
         <field name="priority">16</field>
         <field name="arch" type="xml">
-            <field name="amount_untaxed" position="before">
+            <field name="amount_total" position="after">
                 <field name="invoice_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
             </field>
         </field>
     </record>
+
+    <record id="sale_order_tags_view_order_tree" model="ir.ui.view">
+        <field name="name">sale_order_tags_view_order_tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <field name="amount_total" position="after">
+                <field name="invoice_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </field>
+        </field>
+    </record>
+</odoo>
 </odoo>
