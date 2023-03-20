@@ -15,8 +15,12 @@ class SaleOrderTags(models.Model):
     @api.depends("order_line.invoice_lines", "order_line.invoice_lines.move_id.state")
     def _compute_sale_order_tags(self):
         invoice_tag = self.env.ref("sale_order_tags_data.crm_invoice_tag", False)
-        partial_refund_tag = self.env.ref("sale_order_tags_data.crm_partial_refund_tag", False)
-        full_refund_tag = self.env.ref("sale_order_tags_data.crm_full_refund_tag", False)
+        partial_refund_tag = self.env.ref(
+            "sale_order_tags_data.crm_partial_refund_tag", False
+        )
+        full_refund_tag = self.env.ref(
+            "sale_order_tags_data.crm_full_refund_tag", False
+        )
 
         for rec in self:
             res_tags = []
