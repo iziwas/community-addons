@@ -1,0 +1,4 @@
+"ID Externe","Nom de l'étiquette","Can be deleted","Couleur"
+"sale_order_tags.crm_invoice_tag","Invoice","","3"
+"sale_order_tags.crm_full_refund_tag","Full refund","","7"
+"sale_order_tags.crm_partial_refund_tag","Partial refund","","7"

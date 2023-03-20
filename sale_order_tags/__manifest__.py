@@ -8,9 +8,11 @@ Sale Order Tags
 ===============
 Tools to add automatically tags if account.invoice is paid or not
     """,
-    "depends": ["sale", "sale_order_tags_data"],
+    "depends": ["sale"],
     "data": [
-        "views/sale_order_tags.xml",
+        "data/crm_tag.xml",
+        "views/sale_order.xml",
+        "views/crm_tag.xml",
     ],
     "installable": True,
     "auto_install": False,

@@ -1,1 +1,1 @@
-from . import sale_order_tags
+from . import crm_tag, sale_order

@@ -14,9 +14,13 @@ class SaleOrderTags(models.Model):
 
     @api.depends("order_line.invoice_lines", "order_line.invoice_lines.move_id.state")
     def _compute_sale_order_tags(self):
-        invoice_tag = self.env.ref("sale_order_tags_data.crm_invoice_tag")
-        partial_refund_tag = self.env.ref("sale_order_tags_data.crm_partial_refund_tag")
-        full_refund_tag = self.env.ref("sale_order_tags_data.crm_full_refund_tag")
+        invoice_tag = self.env.ref("sale_order_tags_data.crm_invoice_tag", False)
+        partial_refund_tag = self.env.ref(
+            "sale_order_tags_data.crm_partial_refund_tag", False
+        )
+        full_refund_tag = self.env.ref(
+            "sale_order_tags_data.crm_full_refund_tag", False
+        )
 
         for rec in self:
             res_tags = []
@@ -39,16 +43,16 @@ class SaleOrderTags(models.Model):
             )
 
             # Add invoice tag
-            if amount_total_invoiced:
+            if amount_total_invoiced and invoice_tag:
                 res_tags.append(invoice_tag.id)
 
             # Refund tags
             if amount_total_invoiced and amount_total_refunded:
                 # Add full refund tag if amount_total_invoice and amount_total_refunded have the same value.
-                if amount_total_refunded == amount_total_invoiced:
+                if amount_total_refunded == amount_total_invoiced and full_refund_tag:
                     res_tags.append(full_refund_tag.id)
                 else:
                     # Partial refund tag
-                    if amount_total_refunded:
+                    if amount_total_refunded and partial_refund_tag:
                         res_tags.append(partial_refund_tag.id)
             rec.invoice_tag_ids = [(6, 0, res_tags)]
