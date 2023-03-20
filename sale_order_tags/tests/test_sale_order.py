@@ -4,12 +4,14 @@ from odoo.tests import Form, tagged
 
 
 @tagged("post_install", "-at_install", "sale_order_tags")
-class TestSaleOrderTags(TestSaleToInvoice):
+class TestSaleOrder(TestSaleToInvoice):
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass(chart_template_ref=chart_template_ref)
         cls.invoice_tag = cls.env.ref("sale_order_tags_data.crm_invoice_tag")
-        cls.partial_refund_tag = cls.env.ref("sale_order_tags_data.crm_partial_refund_tag")
+        cls.partial_refund_tag = cls.env.ref(
+            "sale_order_tags_data.crm_partial_refund_tag"
+        )
         cls.full_refund_tag = cls.env.ref("sale_order_tags_data.crm_full_refund_tag")
 
     def test_sale_order_invoice_tag(self):
