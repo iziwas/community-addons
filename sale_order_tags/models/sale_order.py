@@ -39,16 +39,16 @@ class SaleOrderTags(models.Model):
             )
 
             # Add invoice tag
-            if amount_total_invoiced:
+            if amount_total_invoiced and invoice_tag:
                 res_tags.append(invoice_tag.id)
 
             # Refund tags
             if amount_total_invoiced and amount_total_refunded:
                 # Add full refund tag if amount_total_invoice and amount_total_refunded have the same value.
-                if amount_total_refunded == amount_total_invoiced:
+                if amount_total_refunded == amount_total_invoiced and full_refund_tag:
                     res_tags.append(full_refund_tag.id)
                 else:
                     # Partial refund tag
-                    if amount_total_refunded:
+                    if amount_total_refunded and partial_refund_tag:
                         res_tags.append(partial_refund_tag.id)
             rec.invoice_tag_ids = [(6, 0, res_tags)]

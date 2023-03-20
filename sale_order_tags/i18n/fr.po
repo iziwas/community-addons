@@ -16,14 +16,36 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_order_tags
+#: model:ir.model,name:sale_order_tags.model_crm_tag
+msgid "CRM Tag"
+msgstr "Etiquette CRM"
+
+#. module: sale_order_tags
+#: model:ir.model.fields,field_description:sale_order_tags.field_crm_tag__can_be_deleted
+msgid "Can be deleted"
+msgstr "Peut être supprimé"
+
+#. module: sale_order_tags
+#: model:ir.model.fields,field_description:sale_order_tags.field_crm_tag__display_name
 #: model:ir.model.fields,field_description:sale_order_tags.field_sale_order__display_name
 msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: sale_order_tags
+#: model:crm.tag,name:sale_order_tags.crm_full_refund_tag
+msgid "Full refund"
+msgstr "Avoir intégral"
+
+#. module: sale_order_tags
+#: model:ir.model.fields,field_description:sale_order_tags.field_crm_tag__id
 #: model:ir.model.fields,field_description:sale_order_tags.field_sale_order__id
 msgid "ID"
 msgstr "ID"
+
+#. module: sale_order_tags
+#: model:crm.tag,name:sale_order_tags.crm_invoice_tag
+msgid "Invoice"
+msgstr "Facture"
 
 #. module: sale_order_tags
 #: model:ir.model.fields,field_description:sale_order_tags.field_sale_order__invoice_tag_ids
@@ -31,11 +53,23 @@ msgid "Invoice tags"
 msgstr "Etiquettes de facturation"
 
 #. module: sale_order_tags
+#: model:ir.model.fields,field_description:sale_order_tags.field_crm_tag____last_update
 #: model:ir.model.fields,field_description:sale_order_tags.field_sale_order____last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: sale_order_tags
+#: model:crm.tag,name:sale_order_tags.crm_partial_refund_tag
+msgid "Partial refund"
+msgstr "Avoir partiel"
+
+#. module: sale_order_tags
 #: model:ir.model,name:sale_order_tags.model_sale_order
 msgid "Sales Order"
 msgstr "Bon de commande"
+
+#. module: sale_order_tags
+#: code:addons/sale_order_tags/models/crm_tag.py:0
+#, python-format
+msgid "This item can't be deleted."
+msgstr "Cet item ne peut pas être supprimé."
